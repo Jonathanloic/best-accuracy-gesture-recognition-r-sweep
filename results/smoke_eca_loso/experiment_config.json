@@ -1,0 +1,124 @@
+{
+  "configuration": {
+    "name": "best_accuracy_eca",
+    "base_model": "best_accuracy",
+    "preprocessed_data": {
+      "band_pass_hz": [
+        225,
+        375
+      ],
+      "downsampling_ratio": 1,
+      "window_ms": 1250,
+      "normalization": "already present in saved samples; do not reapply"
+    },
+    "model": {
+      "kernel_size": 15,
+      "num_blocks": 6,
+      "channel_width": 32,
+      "widths": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "dropout": 0.2,
+      "input_channels": 4,
+      "num_classes": 6,
+      "attention": {
+        "type": "eca_channel",
+        "placement": "after_relu_before_dropout",
+        "gamma": 2,
+        "b": 1,
+        "adaptive_kernel_size_for_C32": 3,
+        "squeeze": "global_average_pool_over_time",
+        "channel_interaction": "Conv1d across channel descriptor"
+      }
+    }
+  },
+  "training": {
+    "epochs": 1,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "seed": 42,
+    "num_workers": 0,
+    "device": "auto",
+    "model_name": "best_accuracy_eca"
+  },
+  "dataset": {
+    "num_samples": 8999,
+    "subjects": [
+      "P001",
+      "P002",
+      "P003",
+      "P004",
+      "P005",
+      "P006",
+      "P007",
+      "P008",
+      "P009",
+      "P010",
+      "P011",
+      "P012",
+      "P013",
+      "P014",
+      "P015"
+    ],
+    "num_subjects": 15,
+    "sessions": [
+      "S001",
+      "S002",
+      "S003",
+      "S004",
+      "S005",
+      "S006",
+      "S007",
+      "S008",
+      "S009",
+      "S010"
+    ],
+    "num_sessions": 10,
+    "class_names": [
+      "knock",
+      "swipe-down",
+      "swipe-left",
+      "swipe-right",
+      "swipe-up",
+      "tap"
+    ],
+    "num_classes": 6,
+    "samples_per_subject": {
+      "P001": 600,
+      "P002": 600,
+      "P003": 600,
+      "P004": 600,
+      "P005": 600,
+      "P006": 600,
+      "P007": 600,
+      "P008": 600,
+      "P009": 600,
+      "P010": 600,
+      "P011": 600,
+      "P012": 600,
+      "P013": 600,
+      "P014": 599,
+      "P015": 600
+    },
+    "samples_per_gesture": {
+      "knock": 1500,
+      "swipe-down": 1500,
+      "swipe-left": 1500,
+      "swipe-right": 1499,
+      "swipe-up": 1500,
+      "tap": 1500
+    },
+    "input_shape": [
+      4,
+      1250
+    ]
+  },
+  "fold_subjects": [
+    "P001"
+  ]
+}

@@ -1,0 +1,2 @@
+fold,held_out_subject,train_samples,test_samples,calibration_samples,final_training_loss,final_training_accuracy,final_test_loss,final_test_accuracy,macro_precision_diagnostic,num_trainable_parameters,seed,epoch_count
+1,P001,8399,600,0,1.7172605344434198,0.2978926062626503,1.8019616254170736,0.16666666666666666,0.08561643835616438,8740,42,1

@@ -1,0 +1,7 @@
+true\pred,knock,swipe-down,swipe-left,swipe-right,swipe-up,tap
+knock,90,0,0,0,0,0
+swipe-down,1,61,11,11,6,0
+swipe-left,0,7,64,11,6,2
+swipe-right,0,3,1,82,3,1
+swipe-up,0,3,0,20,67,0
+tap,37,0,0,1,0,52

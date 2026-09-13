@@ -1,0 +1,63 @@
+{
+  "configuration_name": "best_accuracy_eca",
+  "protocol": "loso",
+  "fold": 12,
+  "held_out_subject": "P012",
+  "calibration_session": null,
+  "calibration_samples": 0,
+  "kernel_size": 15,
+  "num_blocks": 6,
+  "channel_width": 32,
+  "widths": [
+    32,
+    32,
+    32,
+    32,
+    32,
+    32
+  ],
+  "dropout": 0.2,
+  "attention": {
+    "type": "eca_channel",
+    "placement": "after_relu_before_dropout",
+    "gamma": 2,
+    "b": 1,
+    "adaptive_kernel_size": 3,
+    "squeeze": "global_average_pool_over_time",
+    "channel_interaction": "Conv1d across channel descriptor"
+  },
+  "input_channels": 4,
+  "num_classes": 6,
+  "class_names": [
+    "knock",
+    "swipe-down",
+    "swipe-left",
+    "swipe-right",
+    "swipe-up",
+    "tap"
+  ],
+  "num_trainable_parameters": 8740,
+  "train_samples": 8399,
+  "test_samples": 600,
+  "final_training_loss": 0.053430397994483646,
+  "final_training_accuracy": 0.9822597928324801,
+  "final_test_loss": 0.35347184896469114,
+  "final_test_accuracy": 0.8966666666666666,
+  "macro_precision_diagnostic": 0.923152657822469,
+  "per_class_precision": {
+    "knock": 0.6756756756756757,
+    "swipe-down": 0.98989898989899,
+    "swipe-left": 0.9433962264150944,
+    "swipe-right": 0.9519230769230769,
+    "swipe-up": 0.978021978021978,
+    "tap": 1.0
+  },
+  "seed": 44,
+  "epoch_count": 300,
+  "batch_size": 128,
+  "optimizer": "AdamW",
+  "learning_rate": 0.001,
+  "loss": "CrossEntropyLoss",
+  "device": "cuda",
+  "best_accuracy": null
+}
