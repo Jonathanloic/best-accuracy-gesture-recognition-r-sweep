@@ -54,6 +54,21 @@ BEST_ACCURACY_CHANNEL_TEMPORAL_CONFIG = {
 
 
 
+BEST_ACCURACY_TEMPORAL_CONFIG = {
+    "name": "best_accuracy_temporal",
+    "base_model": "best_accuracy",
+    "preprocessed_data": BEST_ACCURACY_CONFIG["preprocessed_data"],
+    "model": {
+        **BEST_ACCURACY_CONFIG["model"],
+        "attention": {
+            "type": "temporal",
+            "placement": "after_relu_before_dropout",
+            "temporal_kernel_size": 7,
+        },
+    },
+}
+
+
 BEST_ACCURACY_SE_CONFIG = {
     "name": "best_accuracy_se",
     "base_model": "best_accuracy",
@@ -99,7 +114,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("best_accuracy", "best_accuracy_channel_temporal", "best_accuracy_se", "best_accuracy_eca"),
+        choices=(
+            "best_accuracy",
+            "best_accuracy_channel_temporal",
+            "best_accuracy_temporal",
+            "best_accuracy_se",
+            "best_accuracy_eca",
+        ),
         default="best_accuracy",
         help="Model configuration. Default keeps the original baseline.",
     )
@@ -333,9 +354,13 @@ def main() -> None:
             BEST_ACCURACY_CHANNEL_TEMPORAL_CONFIG
             if args.model == "best_accuracy_channel_temporal"
             else (
-                BEST_ACCURACY_SE_CONFIG
-                if args.model == "best_accuracy_se"
-                else BEST_ACCURACY_ECA_CONFIG
+                BEST_ACCURACY_TEMPORAL_CONFIG
+                if args.model == "best_accuracy_temporal"
+                else (
+                    BEST_ACCURACY_SE_CONFIG
+                    if args.model == "best_accuracy_se"
+                    else BEST_ACCURACY_ECA_CONFIG
+                )
             )
         )
     )

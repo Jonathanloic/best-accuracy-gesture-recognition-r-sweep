@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--model", required=True, choices=[
         "best_accuracy",
         "best_accuracy_channel_temporal",
+        "best_accuracy_temporal",
         "best_accuracy_eca",
         "best_accuracy_se",
     ])
