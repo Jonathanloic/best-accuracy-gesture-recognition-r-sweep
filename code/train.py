@@ -16,6 +16,7 @@ from model import build_best_accuracy_model, count_trainable_parameters
 from model_attention import build_best_accuracy_channel_temporal_model
 from model_se import build_best_accuracy_se_model
 from model_eca import build_best_accuracy_eca_model
+from model_temporal import build_best_accuracy_temporal_model
 from reproducibility import make_generator, seed_worker, set_global_seed
 
 
@@ -228,6 +229,8 @@ def run_fold(
         ).to(device)
     elif config.model_name == "best_accuracy_eca":
         model = build_best_accuracy_eca_model(in_channels=4, num_classes=6).to(device)
+    elif config.model_name == "best_accuracy_temporal":
+        model = build_best_accuracy_temporal_model(in_channels=4, num_classes=6).to(device)
     else:
         raise ValueError(f"Unknown model: {config.model_name}")
 
@@ -276,6 +279,9 @@ def run_fold(
         print("ECA gamma, b:         2, 1")
         print("ECA channel kernel:   3 for C=32")
         print("ECA squeeze:          Global average pooling over time")
+    elif config.model_name == "best_accuracy_temporal":
+        print("Attention:            Temporal only after each block")
+        print("Temporal kernel:      7")
     print(f"Trainable parameters: {num_parameters}")
     print(f"Device:               {device}")
     print(f"Batch size:           {config.batch_size}")
@@ -369,7 +375,15 @@ def run_fold(
                         "channel_interaction": "Conv1d across channel descriptor",
                     }
                     if config.model_name == "best_accuracy_eca"
-                    else None
+                    else (
+                        {
+                            "type": "temporal",
+                            "placement": "after_relu_before_dropout",
+                            "temporal_kernel_size": 7,
+                        }
+                        if config.model_name == "best_accuracy_temporal"
+                        else None
+                    )
                 )
             )
         ),
